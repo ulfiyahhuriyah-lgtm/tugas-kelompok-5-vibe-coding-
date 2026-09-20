@@ -1,0 +1,9 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Frontend HTML5/CSS3/Vanilla JS yang mengonsumsi user-service & book-service",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "dependencies": {},
+  "engines": { "node": ">=18.0.0" }
+}

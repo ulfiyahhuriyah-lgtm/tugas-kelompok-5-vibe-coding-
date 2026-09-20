@@ -1,0 +1,25 @@
+services:
+  user-service:
+    build: ./user-service
+    ports:
+      - "4001:4001"
+    environment:
+      - PORT=4001
+  book-service:
+    build: ./book-service
+    ports:
+      - "4002:4002"
+    environment:
+      - PORT=4002
+      - USER_SERVICE_URL=http://user-service:4001
+    depends_on:
+      - user-service
+  frontend:
+    build: ./frontend
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+    depends_on:
+      - user-service
+      - book-service

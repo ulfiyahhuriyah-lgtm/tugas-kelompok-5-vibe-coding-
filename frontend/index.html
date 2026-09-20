@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perpustakaan Kampus — Peminjaman Buku</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ LAYAR MASUK ============ -->
+<section id="login-section" class="layar">
+  <div class="masuk-bungkus">
+    <div class="masuk-kartu">
+      <p class="masuk-label">Kartu Anggota</p>
+      <h1 class="masuk-judul">Perpustakaan Kampus</h1>
+      <p class="masuk-sub">Masukkan NIM dan nama untuk melihat katalog serta meminjam buku.</p>
+
+      <form id="login-form" novalidate>
+        <label for="nim">NIM</label>
+        <input type="text" id="nim" placeholder="2441919061" autocomplete="off" required>
+
+        <label for="nama">Nama lengkap</label>
+        <input type="text" id="nama" placeholder="Nama sesuai kartu mahasiswa" autocomplete="off" required>
+
+        <button type="submit" class="tombol-utama">Masuk</button>
+        <p id="login-error" class="pesan-galat sembunyi"></p>
+      </form>
+    </div>
+    <p class="masuk-catatan">
+      Tiga layanan harus berjalan: <span class="mono">user-service</span> di 4001,
+      <span class="mono">book-service</span> di 4002, dan halaman ini di 4000.
+    </p>
+  </div>
+</section>
+
+<!-- ============ APLIKASI ============ -->
+<section id="app-section" class="layar sembunyi">
+
+  <header class="kepala">
+    <div class="kepala-kiri">
+      <span class="kepala-nama">Perpustakaan Kampus</span>
+      <div id="status-layanan" class="status-layanan" title="Status layanan"></div>
+    </div>
+    <div class="kepala-kanan">
+      <span id="welcome-text" class="kepala-pengguna"></span>
+      <button id="logout-btn" class="tombol-halus">Keluar</button>
+    </div>
+  </header>
+
+  <div class="kartu-statistik">
+    <div class="stat-kartu">
+      <div class="stat-angka" id="active-count">0</div>
+      <div class="stat-label">Buku Aktif Dipinjam</div>
+    </div>
+    <div class="stat-kartu">
+      <div class="stat-angka" id="batas-maks">3</div>
+      <div class="stat-label">Batas Maksimal</div>
+    </div>
+    <div class="stat-kartu">
+      <div class="stat-angka">7</div>
+      <div class="stat-label">Hari Masa Pinjam</div>
+    </div>
+  </div>
+
+  <nav class="tab-nav" id="tab-nav">
+    <button type="button" class="tab-btn aktif" data-tab="katalog">Daftar Buku</button>
+    <button type="button" class="tab-btn" data-tab="pengembalian">Pengembalian</button>
+  </nav>
+
+  <main class="panggung">
+
+    <!-- TAB: DAFTAR BUKU -->
+    <section class="kolom tab-konten" id="tab-katalog">
+      <div class="kolom-kepala">
+        <h2>Daftar Buku</h2>
+        <span class="asal" title="Data berasal dari book-service">book-service</span>
+      </div>
+
+      <div class="alat">
+        <input type="search" id="cari" class="alat-cari" placeholder="Cari judul, penulis, atau kategori" autocomplete="off">
+        <div class="alat-saring">
+          <select id="saring-kategori" aria-label="Saring kategori">
+            <option value="">Semua kategori</option>
+          </select>
+          <select id="saring-status" aria-label="Saring ketersediaan">
+            <option value="">Semua status</option>
+            <option value="tersedia">Tersedia</option>
+            <option value="dipinjam">Sedang dipinjam</option>
+          </select>
+        </div>
+      </div>
+
+      <p id="info-hasil" class="info-hasil"></p>
+      <div id="book-list" class="rak"></div>
+    </section>
+
+    <!-- TAB: PENGEMBALIAN -->
+    <section class="kolom tab-konten sembunyi" id="tab-pengembalian">
+      <p id="pita-tempo" class="pita-tempo-mandiri">Belum ada jatuh tempo</p>
+
+      <div class="kolom-kepala">
+        <h2>Pinjaman saya</h2>
+        <span class="asal">book-service</span>
+      </div>
+      <div id="loan-list" class="tumpuk"></div>
+
+      <div class="kolom-kepala kolom-kepala-renggang">
+        <h2>Sudah dikembalikan</h2>
+      </div>
+      <div id="history-list" class="tumpuk"></div>
+    </section>
+
+  </main>
+
+  <footer class="kaki">
+    <span>Antarmuka ini tidak menyimpan data. Seluruh aturan peminjaman dijalankan di sisi server.</span>
+  </footer>
+</section>
+
+<div id="toast" class="toast sembunyi" role="status" aria-live="polite"></div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

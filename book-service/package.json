@@ -1,0 +1,13 @@
+{
+  "name": "book-service",
+  "version": "1.0.0",
+  "description": "Microservice katalog buku & peminjaman (business rules AC-01/AC-02/AC-03)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
