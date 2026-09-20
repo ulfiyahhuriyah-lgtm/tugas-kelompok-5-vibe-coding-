@@ -305,3 +305,22 @@ Seluruhnya sudah diperbaiki dan diverifikasi ulang.
 > Perbaikan Ronde 2"* di atas.
 
 Seluruh pengujian di atas dijalankan langsung terhadap service yang berjalan (bukan simulasi), dengan hasil aktual yang konsisten dengan tabel di atas.
+
+---
+
+## Verifikasi Manual Integrasi Antar-Service
+
+Pada 21 September 2026 dilakukan verifikasi manual terhadap integrasi `user-service` dan `book-service` menggunakan PowerShell. Pengujian dilakukan terhadap service yang sedang berjalan secara lokal.
+
+| Pengujian | Hasil |
+|---|---|
+| `GET /api/health` pada user-service | HTTP 200 |
+| `GET /api/books` pada book-service | HTTP 200 |
+| `GET /api/loans` tanpa token | HTTP 401 Unauthorized |
+| Login dengan NIM dan nama yang sesuai | HTTP 200, token diterbitkan |
+| `GET /api/loans` menggunakan token valid | HTTP 200 |
+| `GET /api/loans` menggunakan token palsu | HTTP 401 Unauthorized |
+
+Hasil tersebut menunjukkan bahwa `book-service` dapat berkomunikasi dengan `user-service` untuk melakukan validasi token. Akses ke data peminjaman tanpa token atau dengan token yang tidak valid ditolak.
+
+Verifikasi manual ini dilakukan sebagai pemeriksaan tambahan terhadap integrasi antar-service sebelum perubahan dianggap selesai.
