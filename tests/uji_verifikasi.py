@@ -75,7 +75,7 @@ try:
     p("#" * 64)
     p("BAGIAN 1 — REGRESI: memastikan AC lama MASIH berjalan")
     p("#" * 64)
-    tok = login("2441919061", "Muhammad Ridho")
+    tok = login("2441919061", "Ridho")
     cek("US-01 login menerbitkan token", bool(tok))
 
     st, d = req("POST", "http://localhost:4001/api/login", {"nim": "9", "nama": ""})
@@ -118,7 +118,7 @@ try:
     p("#" * 64)
 
     p("BUG #1 — Return tanpa token / milik orang lain")
-    tokX = login("8888", "Penyerang X")
+    tokX = login("2441919005", "Yuliani")
     st, d = req("GET", f"http://localhost:4002/api/loans?token={tok}")
     loan_ridho = d["loans"][0]["id"]
     st, d = req("POST", f"http://localhost:4002/api/loans/{loan_ridho}/return")
@@ -138,8 +138,8 @@ try:
 
     p()
     p("BUG #2b — Return ganda tidak boleh membebaskan buku orang lain")
-    tokF = login("6666", "Mahasiswa F")
-    tokG = login("7777", "Mahasiswa G")
+    tokF = login("2441919023", "Firda")
+    tokG = login("2441919054", "Huriyah")
     st, dF = req("POST", "http://localhost:4002/api/books/B005/borrow", {"token": tokF})
     lidF = dF["loan"]["id"]
     req("POST", f"http://localhost:4002/api/loans/{lidF}/return", {"token": tokF})
@@ -149,7 +149,7 @@ try:
     st, d = req("GET", "http://localhost:4002/api/books")
     b5 = [x for x in d["books"] if x["id"] == "B005"][0]
     cek("Buku milik G tetap terkunci setelah F return ulang",
-        ok and b5["available"] is False and b5["borrowedBy"] == "7777",
+        ok and b5["available"] is False and b5["borrowedBy"] == "2441919054",
         f"(available={b5['available']}, borrowedBy={b5['borrowedBy']})")
 
     p()
@@ -157,7 +157,7 @@ try:
     st, d = req("GET", "http://localhost:4002/api/loans?nim=6666")
     cek("Akses via ?nim= (tanpa token) ditolak", st == 401, f"(HTTP {st})")
     st, d = req("GET", f"http://localhost:4002/api/loans?token={tokG}")
-    milik_g = all(l["nim"] == "7777" for l in d.get("loans", []))
+    milik_g = all(l["nim"] == "2441919054" for l in d.get("loans", []))
     cek("Token hanya mengembalikan data pemiliknya", st == 200 and milik_g,
         f"({len(d.get('loans', []))} loan, semua milik G={milik_g})")
 

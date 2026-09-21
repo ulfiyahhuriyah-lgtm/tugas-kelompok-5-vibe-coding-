@@ -79,7 +79,7 @@ try:
     p()
     p("LANGKAH 1 — Submit form login (US-01)")
     st, d = req("POST", "http://localhost:4001/api/login",
-                {"nim": "2441919054", "nama": "Huriyah Ulfiah"})
+                {"nim": "2441919054", "nama": "Huriyah"})
     token = d.get("token")
     cek("Login berhasil & token diterbitkan", st == 200 and bool(token), f"(HTTP {st})")
 

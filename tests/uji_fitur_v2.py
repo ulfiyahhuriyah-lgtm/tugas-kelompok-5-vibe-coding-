@@ -105,7 +105,7 @@ try:
     cek("Riwayat tanpa token ditolak", st == 401, f"(HTTP {st})")
     st, d = req("GET", "http://localhost:4002/api/loans/history?token=palsu")
     cek("Riwayat dengan token palsu ditolak", st == 401, f"(HTTP {st})")
-    _, d2 = req("POST", "http://localhost:4001/api/login", {"nim": "9999", "nama": "Orang Lain"})
+    _, d2 = req("POST", "http://localhost:4001/api/login", {"nim": "2441919005", "nama": "Yuliani"})
     st, d = req("GET", f"http://localhost:4002/api/loans/history?token={d2['token']}")
     cek("Token lain hanya melihat riwayatnya sendiri", st == 200 and d["loans"] == [],
         f"({len(d.get('loans', []))} entri)")
